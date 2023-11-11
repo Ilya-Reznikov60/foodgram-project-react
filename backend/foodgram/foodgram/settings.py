@@ -63,7 +63,7 @@ DATABASES = {
         'USER': os.getenv('POSTGRES_USER', 'django'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
         'HOST': os.getenv('DB_HOST', ''),
-        'PORT': os.getenv('DB_PORT', 5432)
+        'PORT': os.getenv('DB_PORT')
     }
 }
 
@@ -97,7 +97,7 @@ DJOSER = {
     'HIDE_USERS': False,
 }
 
-AUTH_USER_MODEL = 'users.CustomUser'  #
+AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
