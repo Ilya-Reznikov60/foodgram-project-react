@@ -97,7 +97,7 @@ DJOSER = {
     'HIDE_USERS': False,
 }
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'  #
 
 AUTH_PASSWORD_VALIDATORS = [
     {
