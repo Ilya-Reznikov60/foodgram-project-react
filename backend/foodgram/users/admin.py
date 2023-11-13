@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
+from django.contrib.auth.models import Token
+
 from users.models import CustomUser, Follow
 
 
@@ -11,3 +14,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 @admin.register(Follow)
 class FollowAdmin(admin.ModelAdmin):
     list_display = ('author', 'user')
+
+
+admin.site.unregister(Group)
+admin.site.unregister(Token)
