@@ -55,9 +55,9 @@ class UserFollowView(APIView):
     """Функция для добавления/удаления подписок."""
 
     def post(self, request, user_id):
-        author = get_object_or_404(CustomUser, id=user_id)
+        _ = get_object_or_404(CustomUser, id=user_id)
         serializer = FollowSerializer(
-            data={'user': request.user.id, 'author': author.id},
+            data={'user': request.user.id, 'author': user_id},
             context={'request': request}
         )
         serializer.is_valid(raise_exception=True)
@@ -65,15 +65,17 @@ class UserFollowView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, user_id):
-        author = get_object_or_404(CustomUser, id=user_id)
-        if not Follow.objects.filter(
-            user=request.user, author=author
-        ).exists():
+        _ = get_object_or_404(CustomUser, id=user_id)
+        subscription = Follow.objects.filter(
+            user=request.user, author=user_id
+        )
+
+        if not subscription:
             return Response(
                 {'errors': NOT_FOLLOW_THIS_USER},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        Follow.objects.get(user=request.user.id, author=user_id).delete()
+        subscription.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
@@ -114,7 +116,13 @@ class RecipeViewSet(ModelViewSet):
 
     """Вьюсет для работы с Рецептами."""
 
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.select_related(
+        'author'
+    ).prefetch_related(
+        'tags',
+        'ingridient_list',
+        'ingridient_list__ingredient'
+    )
     pagination_class = CustomPagination
     permission_classes = (IsAdminAuthorOrReadOnly,)
     filter_backends = (DjangoFilterBackend,)

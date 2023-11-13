@@ -87,7 +87,7 @@ python manage.py collectstatic --no-input
 - Загрузка тестовых данных в виде ингредиентов:
 
 ```
-python manage.py load_data
+python manage.py load_csv_data
 ```
 
 
@@ -121,7 +121,7 @@ docker-compose exec backend python manage.py cp -r /app/static/ . /backend_stati
 - Грузим тестовые данные:
 
 ```
-docker-compose exec backend python manage.py load_data   
+docker-compose exec backend python manage.py load_csv_data   
 ```
 
 ### Вот основные адреса для проверки: 
@@ -162,7 +162,7 @@ docker-compose exec backend python manage.py load_data
 ### Также используйте следующую команду для заполнения БД тестовыми данными:
 
 ```
-sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_data
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_csv_data
 ```
 
 ## Автор

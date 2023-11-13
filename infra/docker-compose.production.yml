@@ -10,19 +10,19 @@ services:
 
   db:
     image: postgres:13
-    env_file: ../.env
+    env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data/
 
   frontend:
-    env_file: ../.env
+    env_file: .env
     image: ilyarez/foodgram_frontend
     volumes:
       - ../frontend/:/app/result_build/
 
   backend:
     image: ilyarez/foodgram_backend
-    env_file: ../.env
+    env_file: .env
     depends_on:
       - db
     volumes:
@@ -31,7 +31,7 @@ services:
 
   nginx:
     image: ilyarez/foodgram_gateway
-    env_file: ../.env
+    env_file: .env
     ports:
       - "5000:80"
     volumes:
