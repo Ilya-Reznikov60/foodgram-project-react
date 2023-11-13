@@ -7,8 +7,9 @@ from recipes.models import (
 
 
 class IngredientInLine(admin.TabularInline):
-    model = Ingredient
+    model = IngredientAmount
     extra = 1
+    min_num = 1
 
 
 @admin.register(Recipe)
@@ -16,7 +17,7 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ('name', 'id', 'author', 'get_favorite')
     list_filter = ('author', 'name', 'tags')
     readonly_fields = ('get_favorite',)
-    inlines = [IngredientInLine]
+    inlines = (IngredientInLine,)
 
     def get_favorite(self, obj):
         return obj.favorite.count()
