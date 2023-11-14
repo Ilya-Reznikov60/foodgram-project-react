@@ -1,6 +1,7 @@
+from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
 
 from users.models import CustomUser
 
@@ -39,10 +40,17 @@ class Tag(models.Model):
         unique=True,
         verbose_name='Название Тега'
     )
-    color = models.CharField(
+    color = ColorField(
         max_length=7,
+        format='hex',
         unique=True,
-        verbose_name='Цвет Тега'
+        verbose_name='Цвет Тега',
+        validators=[
+            RegexValidator(
+                regex="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$",
+                message='Проверьте вводимый формат',
+            )
+        ],
     )
     slug = models.SlugField(
         max_length=200,

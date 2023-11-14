@@ -67,7 +67,7 @@ class UserFollowView(APIView):
     def delete(self, request, user_id):
         _ = get_object_or_404(CustomUser, id=user_id)
         subscription = Follow.objects.filter(
-            user=request.user, author=user_id
+            user=request.user, author_id=user_id
         )
 
         if not subscription:
