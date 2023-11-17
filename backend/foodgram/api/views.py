@@ -237,8 +237,9 @@ class RecipeViewSet(ModelViewSet):
             'ingredient__measurement_unit'
         ).annotate(amount=Sum('amount'))
 
+        user_full_name = user.get_full_name()
         shopping_list = (
-            f'Список покупок для: {user.get_full_name()}\n\n'
+            f'Список покупок для: {user_full_name}\n\n'
             f'Foodgram\n\n'
         )
         shopping_list += '\n'.join([
